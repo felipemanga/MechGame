@@ -1,0 +1,3 @@
+implements("App", "Main")
+
+get("App")
