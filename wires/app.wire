@@ -1,3 +1,5 @@
 implements("App", "Main")
 
+singleton("states.Initial", "states.Splash")
+
 get("App")
