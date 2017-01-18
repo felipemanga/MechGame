@@ -1,5 +1,5 @@
 implements("App", "Main")
 
-singleton("states.Initial", "states.Splash")
+multi("state.GameState", "states.Splash")
 
 get("App")

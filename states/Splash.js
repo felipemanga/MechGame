@@ -1,13 +1,17 @@
-needs("states.State", function(){
+need("states.State", function(){
     
     
     CLAZZ("states.Splash", {
-        EXTENDS:"states.State",
-        init:function(){
-            console.log(2738)
-        },
-        preload:function(){
+        EXTENDS:states.State,
+        boot:function(){ this.activate(); },
 
+        init:function(){
+            console.log(678)
+        },
+        
+        preload:function(){
+            console.log(238746)
         }
-    }
+    });
+
 })
