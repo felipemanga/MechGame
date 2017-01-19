@@ -1,3 +1,6 @@
+
+json(null, "resources.splash")
+
 implements("App", "Main")
 
 multi("state.GameState", "states.Splash")
