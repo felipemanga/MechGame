@@ -1,0 +1,29 @@
+{
+    "image":[
+        ["logo", "resources/image/logo.png"]
+    ],
+    "class":{
+        "Logo":{
+            "id":"logo",
+            "components":{
+                "cmp.Sprite":{"asset":"logo"},
+                "cmp.Tween":{},
+                "cmp.Mouse":{ "click":{ 
+                    "accelerateTo":[{
+                        "position.x":1000,
+                        "position.y":600
+                    }, {
+                        "callback":{
+                            "position.x":0
+                        }
+                    }]
+                } }
+            },
+            "position.x":0,
+            "position.y":0
+        }
+    },
+    "entity":[
+        ["Logo", {}]
+    ]
+}

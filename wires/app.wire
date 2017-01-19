@@ -1,8 +1,8 @@
 
-json(null, "resources.splash")
+json(null, "resources.states.boot")
+json(null, "resources.states.mainmenu")
 
 implements("App", "Main")
-
-multi("state.GameState", "states.Splash")
+implements("GameState", "states.State")
 
 get("App")

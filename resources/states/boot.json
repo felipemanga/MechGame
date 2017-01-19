@@ -1,0 +1,42 @@
+{
+    "image":[
+        ["logo", "resources/image/logo.png"]
+    ],
+    "class":{
+        "Logo":{
+            "id":"logo",
+            "components":{
+                "cmp.Sprite":{"asset":"logo"},
+                "cmp.Wait":{},
+                "cmp.Mouse":{
+                    "click":{ "click":[] }
+                },
+                "cmp.State":{
+                    "state":"waiting",
+                    "begin":{
+                        "waiting":{
+                            "wait":[{"state":"done"}, 1000]
+                        },
+                        "done":{
+                            "call":["setGameState", "mainmenu"]
+                        }
+                    },
+                    "event":{
+                        "click":{
+                            "waiting":{ "state":"done" }
+                        }
+                    }
+                }
+            },
+            "position.x":600,
+            "position.y":350,
+            "anchor.x":0.5,
+            "anchor.y":0.5,
+            "scale.x":2,
+            "scale.y":2
+        }
+    },
+    "entity":[
+        ["Logo", {}]
+    ]
+}

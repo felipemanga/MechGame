@@ -1,7 +1,6 @@
 "use strict";
 
 CLAZZ("Main", {
-    INJECT:{states:"state.GameState"},
     DOM:null,
     game:null,
     pool:null,
@@ -9,14 +8,23 @@ CLAZZ("Main", {
     CONSTRUCTOR:function(){
         this.pool = new DOC.Pool();
         this.DOM = DOC.index(document.body, null, this);
-        this.game = new Phaser.Game(1280, 720, Phaser.AUTO, this.DOM.container);
+        this.pool.add(this);
+        this.setGameState("boot");
+    },
 
-        for(var i=0, l=this.states.length; i<l; ++i ){
-            var C=this.states[i];
-            console.log("creating state ", C);
-            this.pool.add( CLAZZ.get(C.fullName, { game:this.game, pool:this.pool.call.bind(this.pool) }) );
+    setGameState:function( strstate ){
+        var state = DOC.resolve( "resources.states." + strstate );
+        if( !state ){
+            console.log("Game state not defined: resources.states." + strstate )
+            return;
         }
         
-        this.pool.call("boot");
+        var inst = CLAZZ.get( state.clazz || "GameState", {
+            resources:state,
+            pool:this.pool
+        });
+
+        if( this.game ) this.game.state.add( strstate, inst, true );
+        else this.game = new Phaser.Game( 1280, 720, Phaser.AUTO, this.DOM.container, inst );
     }
 });

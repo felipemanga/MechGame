@@ -1,17 +1,13 @@
 CLAZZ("states.State", {
-    INJECT:["game", "pool"],
+    INJECT:["pool", "resources"],
     EXTENDS:Phaser.State,
     
-    resources:null,
     entities:null,
     entityDefinitions:null,
 
     CONSTRUCTOR:function(){
-        // silly Phaser.State sets game to null
-        var game = this.game;
         SUPER();
-        this.game = game;
-        game.state.add( this.constructor.fullName, this );
+        this.pool.add(this);
 
         if( !this.entities )
             this.entities = {};
@@ -20,15 +16,33 @@ CLAZZ("states.State", {
             this.entityDefinitions = {};
     },
 
+    init:function(){
+        this.game.stage.disableVisibilityChange = true;
+        this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+        this.game.scale.minWidth = this.gameWidth / 10;
+        this.game.scale.minHeight = this.gameHeight / 10;
+        this.game.scale.maxWidth = this.gameWidth;
+        this.game.scale.maxHeight = this.gameHeight;
+        this.game.scale.pageAlignHorizontally = true;
+        this.game.scale.pageAlignVertically = true;
+        this.game.scale.windowConstraints.bottom = "visual";
+        this.game.scale.refresh();
+    },
+
+    shutdown:function(){
+        this.pool.call("destroy");
+        this.pool.remove(this);
+    },
+
     preload:function(){
-        console.log("Preloading " + this);
         if( !this.resources ) return;
         for( var method in this.resources ){
             var rec = this.resources[method];
             if( this.load[method] ){
                 for( var i=0; i<rec.length; ++i )
                     this.load[method].apply( this.load, rec[i] );
-            }else if( method == "entity" ){
+            }else if( method == "class" ){
                 for( var k in rec ){
                     var def = this.entityDefinitions[k] = rec[k];
                     if( def.components ){
@@ -42,14 +56,26 @@ CLAZZ("states.State", {
         }
     },
 
-    addEntity:function(name, inject){
-        return CLAZZ.get("Entity", DOC.mergeTo({
-            gameState:this, 
-            descriptor:this.entityDefinitions[name]
-        }, inject));
+    create:function(){
+        var dlist = this.resources.entity;
+        if( dlist instanceof Array ){
+            console.log("creating entities");
+            for( var i=0, l=dlist.length; i<l; ++i )
+                this.addEntity.apply(this, dlist[i]);
+        }
     },
 
-    activate:function(){
-        this.game.state.start( this.constructor.fullName );
+    addEntity:function(name, inject){
+        var e = CLAZZ.get("Entity", DOC.mergeTo({
+            gameState:this, 
+            pool:this.pool,
+            call:this.pool.call.bind(this.pool),
+            descriptor:this.entityDefinitions[name]
+        }, inject));
+        return e;
+    },
+
+    isActive:function(){
+        return this.game.state.states[this.game.state.current] == this;
     }
 })
