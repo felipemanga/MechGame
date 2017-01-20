@@ -26,12 +26,13 @@ CLAZZ("cmp.Tween", {
                 count++;
                 var opsk = ops[k];
                 if( !opsk ){
-                    ops[k] = {
+                    opsk = ops[k] = {
                         parts: k.split("."),
                         op:name,
                         target: obj[k],
                         speed:  speed,
                         initial:R(k, this.entity),
+                        value:0,
                         enabled:true,
                         minDelta:minDelta,
                         cb:cb
@@ -45,6 +46,7 @@ CLAZZ("cmp.Tween", {
                     opsk.minDelta = minDelta;
                     opsk.cb = cb;
                 }
+                opsk.value = opsk.initial;
             }
 
             function check(){
@@ -68,12 +70,13 @@ CLAZZ("cmp.Tween", {
                     c[parts[pos]] = {};
                 c = c[parts[pos++]];                
             }
-            var r = c[parts[pos]];
+            var r = opsk.value;
             if( Math.abs(r - opsk.target) < opsk.minDelta ){
                 opsk.enabled = false;
                 if(opsk.cb) opsk.cb.call(this);
             }else{
-                c[parts[pos]] = this.animators[opsk.op].call(this, r, opsk);
+                r = this.animators[opsk.op].call(this, r, opsk);
+                opsk.value = c[parts[pos]] = r;
             }
         }
     }

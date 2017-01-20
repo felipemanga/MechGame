@@ -25,6 +25,6 @@ CLAZZ("Main", {
         });
 
         if( this.game ) this.game.state.add( strstate, inst, true );
-        else this.game = new Phaser.Game( 1280, 720, Phaser.AUTO, this.DOM.container, inst );
+        else this.game = new Phaser.Game( 1920, 1080, Phaser.AUTO, this.DOM.container, inst );
     }
 });

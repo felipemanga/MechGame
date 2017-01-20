@@ -1,14 +1,17 @@
-CLAZZ("cmp.Sprite", {
-    INJECT:["entity", "gameState", "asset"],
-    EXTENDS:Phaser.Sprite,
+CLAZZ("cmp.Text", {
+    INJECT:["entity", "gameState"],
+    EXTENDS:Phaser.Text,
     CONSTRUCTOR:function(){
-        SUPER( this.gameState.game, 0, 0, this.asset);
+        SUPER( this.gameState.game, 0,0, "");
         this.game.world.addChild(this);
+
         this.entity.position = this.position;
         this.entity.anchor = this.anchor;
         this.entity.scale = this.scale;
 
-        // not a NOP!
+        this.setText = this.setText;
+        this.setStyle = this.setStyle;
+
         this.input = this.input;
         this.preUpdate = this.preUpdate;
         this.postUpdate = this.postUpdate;

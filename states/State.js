@@ -68,10 +68,11 @@ CLAZZ("states.State", {
     addEntity:function(name, inject){
         var e = CLAZZ.get("Entity", DOC.mergeTo({
             gameState:this, 
+            game:this.game,
             pool:this.pool,
             call:this.pool.call.bind(this.pool),
-            descriptor:this.entityDefinitions[name]
-        }, inject));
+            descriptor:DOC.mergeTo({}, this.entityDefinitions[name], inject)
+        }));
         return e;
     },
 

@@ -1,42 +1,59 @@
 {
     "image":[
-        ["logo", "resources/image/logo.png"]
+        ["logo", "resources/image/logo.png"],
+        ["bg1",   "resources/image/landscape_0005_6_background.png"],
+        ["bg2",   "resources/image/landscape_0004_5_clouds.png"],
+        ["bg3",   "resources/image/landscape_0003_4_mountain.png"],
+        ["bg4",   "resources/image/landscape_0002_3_trees.png"],
+        ["bg5",   "resources/image/landscape_0001_2_trees.png"],
+        ["bg6",   "resources/image/landscape_0000_1_trees.png"]
     ],
     "class":{
-        "Logo":{
-            "id":"logo",
+        "Background":{
             "components":{
-                "cmp.Sprite":{"asset":"logo"},
-                "cmp.Wait":{},
-                "cmp.Mouse":{
-                    "click":{ "click":[] }
-                },
-                "cmp.State":{
-                    "state":"waiting",
-                    "begin":{
-                        "waiting":{
-                            "wait":[{"state":"done"}, 1000]
-                        },
-                        "done":{
-                            "call":["setGameState", "mainmenu"]
-                        }
-                    },
-                    "event":{
-                        "click":{
-                            "waiting":{ "state":"done" }
-                        }
+                "cmp.Background":{"asset":[
+                    "bg1",
+                    "bg2",
+                    "bg3",
+                    "bg4",
+                    "bg5",
+                    "bg6"
+                ]}
+            },
+            "game.world.setBounds":[-100, -100, 8000, 1180]
+        },
+
+        "Text":{
+            "components":{
+                "cmp.Text":{},
+                "cmp.Tween":{},
+                "cmp.Wait":{}
+            },
+
+            "setStyle":[{ "font":"128px arial", "fontStyle":"italic" }],
+            "setText":["Atemóia 2000"],
+            
+            "position.set":[2960,300],
+            "anchor.setTo":[0.5,0.5],
+
+            "accelerateTo":[
+                {"game.camera.x":2000},
+                {
+                    "speed":0.02,
+                    "minDelta":3,
+                    "callback":{
+                        "accelerateTo":[
+                            {"position.x":0},
+                            {"callback":{"call":["setGameState", "mainmenu"]}}
+                        ]
                     }
                 }
-            },
-            "position.x":600,
-            "position.y":350,
-            "anchor.x":0.5,
-            "anchor.y":0.5,
-            "scale.x":2,
-            "scale.y":2
+            ]
         }
     },
+
     "entity":[
-        ["Logo", {}]
+        ["Background", {}],
+        ["Text", {}]
     ]
 }
