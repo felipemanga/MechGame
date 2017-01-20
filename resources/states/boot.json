@@ -1,6 +1,9 @@
 {
+    "pack":[
+        ["map", "resources/maps/map.json"]
+    ],
+
     "image":[
-        ["logo", "resources/image/logo.png"],
         ["bg1",   "resources/image/landscape_0005_6_background.png"],
         ["bg2",   "resources/image/landscape_0004_5_clouds.png"],
         ["bg3",   "resources/image/landscape_0003_4_mountain.png"],
@@ -21,6 +24,14 @@
                 ]}
             },
             "game.world.setBounds":[-100, -100, 8000, 1180]
+        },
+
+        "World":{
+            "components":{
+                "cmp.TileMap":{
+                    "asset":"map"
+                }
+            }
         },
 
         "Text":{
@@ -54,6 +65,7 @@
 
     "entity":[
         ["Background", {}],
+        ["World", {}],
         ["Text", {}]
     ]
 }
