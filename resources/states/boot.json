@@ -3,6 +3,10 @@
         ["map", "resources/maps/map.json"]
     ],
 
+    "audio":[
+        ["bgm",  "resources/music/music.mp3"]
+    ],
+
     "image":[
         ["bg1",   "resources/image/landscape_0005_6_background.png"],
         ["bg2",   "resources/image/landscape_0004_5_clouds.png"],
@@ -21,10 +25,12 @@
                     "bg4",
                     "bg5",
                     "bg6"
-                ]}
+                ]},
+                "cmp.ActionAudio":{"asset":"bgm"}
             },
             "game.world.setBounds":[-100, -100, 8000, 1180]
         },
+        
 
         "World":{
             "components":{
@@ -47,7 +53,7 @@
             "position.set":[2960,300],
             "anchor.setTo":[0.5,0.5],
 
-            "accelerateTo":[
+            "xaccelerateTo":[
                 {"game.camera.x":2000},
                 {
                     "speed":0.02,
