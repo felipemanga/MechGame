@@ -1,8 +1,9 @@
 CLAZZ("cmp.Sprite", {
-    INJECT:["entity", "gameState", "asset"],
+    INJECT:["entity", "gameState", "asset", "frame"],
     EXTENDS:Phaser.Sprite,
+    frame:null,
     CONSTRUCTOR:function(){
-        SUPER( this.gameState.game, 0, 0, this.asset);
+        SUPER( this.gameState.game, 0, 0, this.asset, this.frame);
         this.game.world.addChild(this);
         this.entity.position = this.position;
         this.entity.anchor = this.anchor;

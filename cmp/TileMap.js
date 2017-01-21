@@ -5,6 +5,9 @@ CLAZZ("cmp.TileMap", {
     CONSTRUCTOR:function(){
         var json = this.game.cache.getTilemapData(this.asset);
         var mat = new PIXI.Matrix(), edef = this.gameState.entityDefinitions;
+        var image, imageframe;
+
+        debugger;
 
         for( var layerId=0; layerId<json.data.layers.length; ++layerId ){
             var layer = json.data.layers[layerId];
@@ -16,9 +19,11 @@ CLAZZ("cmp.TileMap", {
             for( var objectId=0; objectId<layer.objects.length; ++objectId ){
                 var obj = layer.objects[objectId], DO;
                 var rotation = obj.rotation * (1 / 180) * Math.PI;
+                resolveGID(obj.gid);
                 if( obj.type in edef ){
                     var entity = this.gameState.addEntity( obj.name, {
-                        asset:resolveGID(obj.gid)
+                        asset:image,
+                        frame:imageframe
                     });
                     DO = DO.sprite;
                 }else{
@@ -37,7 +42,13 @@ CLAZZ("cmp.TileMap", {
                 var tileset = sets[i];
                 if( tileset.firstgid + tileset.tilecount < gid )
                     continue;
-                return tileset.tiles[ gid - tileset.firstgid ].image;
+                if( tileset.tiles ){
+                    image = tileset.tiles[ gid - tileset.firstgid ].image;
+                    imageframe = null;
+                }else{
+                    image = tileset.image;
+                    imageframe = gid - tileset.firstgid;
+                }
             }
         }
     }
