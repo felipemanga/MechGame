@@ -49,7 +49,8 @@
                 "cmp.Wait":{},
                 "cmp.Mouse":{"DO":"text", "click":{"actionEvent":[]}},
                 "cmp.ActionAudio":{"asset":"bgm"},
-                "cmp.Webcam":{}
+                "cmp.Webcam":{},
+                "cmp.ImgDiff":{}
             },
 
             "setStyle":[{ "font":"128px arial", "fontStyle":"italic" }],
