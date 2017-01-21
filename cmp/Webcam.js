@@ -9,5 +9,10 @@ CLAZZ("cmp.Webcam", {
         this.bitmap = this.game.add.bitmapData(w,h);
         this.game.add.sprite(0,0,this.bitmap); // var sprite = this.bitmap.addToWorld();
         this.webcam.start({video:{width:w, height:h, facingMode:"user"}},this.bitmap.context);
+    },
+
+    grab:function(){
+        this.webcam.grab(this.webcam.context,0,0);
+        return this.bitmap;
     }
 });

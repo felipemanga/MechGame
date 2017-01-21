@@ -1,6 +1,8 @@
 {
     "script":[
-        ["webcam", "lib/Webcam.js"]
+        ["webcam", "lib/Webcam.js"],
+        ["cmpwebcam", "cmp/Webcam.js"],
+        ["cmpwait", "cmp/Wait.js"]
     ],
     "pack":[
         ["map", "resources/maps/map.json"]
@@ -49,7 +51,6 @@
                 "cmp.Wait":{},
                 "cmp.Mouse":{"DO":"text", "click":{"actionEvent":[]}},
                 "cmp.ActionAudio":{"asset":"bgm"},
-                "cmp.Webcam":{},
                 "cmp.ImgDiff":{}
             },
 
