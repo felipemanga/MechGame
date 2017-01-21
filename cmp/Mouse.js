@@ -1,12 +1,13 @@
 CLAZZ("cmp.Mouse", {
-    INJECT:["entity", "mouseover", "mouseout", "click"],
+    INJECT:["entity", "mouseover", "mouseout", "click", "DO"],
     mouseover:null,
     mouseout:null,
     click:null,
     enabled:true,
+    DO:"sprite",
     
     create:function(){
-        this.entity.sprite.inputEnabled = true;
+        this.entity[this.DO].inputEnabled = true;
 
         var map = {
             click:"onInputUp",
@@ -18,7 +19,7 @@ CLAZZ("cmp.Mouse", {
 
         for( var k in map ){
             if( !this[k] ) continue;
-            this.entity.sprite.events[map[k]].add( cb.bind(this, k) );
+            this.entity[this.DO].events[map[k]].add( cb.bind(this, k) );
         }
 
         function cb(k){
