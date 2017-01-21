@@ -32,7 +32,7 @@ CLAZZ("cmp.ActionAudio", {
     },
 
     create:function(){
-        // this.play();
+        this.play();
     },
 
     actionEvent:function(){

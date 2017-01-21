@@ -30,27 +30,12 @@
         },
         
         "Ocean":{
-            "id":"ocean",
             "components":{
-                "cmp.Mouse":{"click":{}},
+                "cmp.Mouse":{"click":{"actionEvent":[]}},
                 "cmp.ActionAudio":{"asset":"bgm"},
                 "cmp.ImgDiff":{},
                 "surf.Ocean":{}
-            },
-
-            "xaccelerateTo":[
-                {"game.camera.x":2000},
-                {
-                    "speed":0.02,
-                    "minDelta":3,
-                    "callback":{
-                        "accelerateTo":[
-                            {"position.x":0},
-                            {"callback":{"call":["setGameState", "mainmenu"]}}
-                        ]
-                    }
-                }
-            ]
+            }
         },
 
         "Surfer":{
