@@ -10,7 +10,7 @@ CLAZZ("cmp.ImgDiff", {
     create:function(){
         this.webcam.create();
         this.doDiffLoop(); // 10 fps
-        setInterval(this.log.bind(this), 1000);
+        // setInterval(this.log.bind(this), 1000);
     },
 
     update:function(){
@@ -39,7 +39,7 @@ CLAZZ("cmp.ImgDiff", {
             return;
         }
         
-        var s = 4, w=img.width;
+        var s = 8, w=img.width;
         if( !this.diff ) this.diff = new Float32Array(Math.floor(w/s));
         var diff = this.diff;
         diff.fill(0);
@@ -59,7 +59,7 @@ CLAZZ("cmp.ImgDiff", {
         }
 
         if( this.entity.onDiff )
-            this.entity.apply(this.entity.onDiff, this.diff);
+            this.entity.apply(this.entity.onDiff, this.diff, bmp, img);
         this.prev = img;
     }
 });
