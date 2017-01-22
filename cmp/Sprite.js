@@ -1,7 +1,9 @@
 CLAZZ("cmp.Sprite", {
     INJECT:["entity", "gameState", "asset", "frame"],
     EXTENDS:Phaser.Sprite,
+    DYNAMIC:true,
     frame:null,
+    
     CONSTRUCTOR:function(){
         SUPER( this.gameState.game, 0, 0, this.asset, this.frame);
         this.game.world.addChild(this);
@@ -11,19 +13,31 @@ CLAZZ("cmp.Sprite", {
 
         // not a NOP!
         this.input = this.input;
-        this.preUpdate = this.preUpdate;
-        this.postUpdate = this.postUpdate;
-        this.update = this.update;
+        this.animations = this.animations;
     },
 
-    create:function(){
-        if( typeof this.entity.update == "function")
-            this.update = this.entity.update;
+    update:function(bail){
+        if( bail ) return;
+        Phaser.Sprite.prototype.update.call(this);
 
-        if( typeof this.entity.postUpdate == "function")
-            this.postUpdate = this.entity.postUpdate;
+        if(this.entity.update)
+            this.entity.update(true);
+    },
 
-        if( typeof this.entity.preUpdate == "function")
-            this.preUpdate = this.entity.preUpdate;
+    preUpdate:function(bail){
+        if( bail ) return;
+        Phaser.Sprite.prototype.preUpdate.call(this);
+        
+        if( this.entity.preUpdate )
+            this.entity.preUpdate(true);
+    },
+
+    postUpdate:function(bail){
+        if( bail ) return;
+        Phaser.Sprite.prototype.postUpdate.call(this);
+        
+        if( this.entity.postUpdate )
+            this.entity.postUpdate(true);
     }
+    
 });

@@ -2,8 +2,8 @@
     "script":[
         ["webcam", "lib/Webcam.js"]
     ],
-    "pack":[
-        ["map", "resources/maps/map.json"]
+    "atlas":[
+        ["shark", "resources/atlas/shark.png", "resources/atlas/shark.json", 1]
     ],
 
     "audio":[
@@ -11,19 +11,20 @@
     ],
 
     "image":[
-        ["bg1",   "resources/image/bg1.png"],
-        ["bg2",   "resources/image/landscape_0004_5_clouds.png"],
-        ["bg3",   "resources/image/landscape_0003_4_mountain.png"],
-        ["bg4",   "resources/image/landscape_0002_3_trees.png"],
-        ["bg5",   "resources/image/landscape_0001_2_trees.png"],
-        ["bg6",   "resources/image/landscape_0000_1_trees.png"],
+        ["bg1",   "resources/image/bg01.png"],
+        ["bg2",   "resources/image/bg02.png"],
+        ["bg3",   "resources/image/bg03.png"],
+        ["bg4",   "resources/image/bg04.png"],
         ["surfer", "resources/image/surfer.png"]
     ],
     "class":{
         "Background":{
             "components":{
                 "cmp.Background":{"asset":[
-                    "bg1"
+                    "bg1",
+                    "bg2",
+                    "bg3",
+                    "bg4"
                 ]}
             },
             "game.stage.backgroundColor":"#d5e8ed"
@@ -43,13 +44,42 @@
                 "cmp.Sprite":{"asset":"surfer"},
                 "cmp.AutoFlip":{},
                 "surf.Surfer":{}
-            }
+            },
+            "scale.setTo":[0.5,0.5]
+        },
+
+        "Shark":{
+            "components":{
+                "cmp.Sprite":{"asset":"shark"},
+                "cmp.AutoFlip":{},
+                "cmp.Inertia":{},
+                "cmp.FlyAI":{},
+                "surf.Shark":{}
+            },
+            "anchor.setTo":[0.5,0.5],
+            "scale.setTo":[0.5,0.5]
+        },
+
+        "SharkGen":{
+            "components":{
+                "cmp.Wait":{},
+                "cmp.Event":{
+                    "event":{
+                        "addShark":{
+                            "gameState.addEntity":["Shark",{}],
+                            "gameState.entities.ocean.bringToTop":[]
+                        }
+                    }
+                }
+            },
+            "wait":[{"addShark":[]}, 1000]
         }
     },
 
     "entity":[
         ["Background",{}],
         ["Ocean", {}],
-        ["Surfer", {}]
+        ["Surfer", {}],
+        ["SharkGen", {}]
     ]
 }

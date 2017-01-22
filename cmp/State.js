@@ -27,6 +27,7 @@ CLAZZ("cmp.State", {
         }
 
         function checkEvent(map){
+            debugger;
             var obj = map[this.state];
             if( !obj ) return;
             this.entity.apply(obj);

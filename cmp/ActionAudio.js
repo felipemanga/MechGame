@@ -38,7 +38,6 @@ CLAZZ("cmp.ActionAudio", {
     },
 
     actionEvent:function(){
-        console.log(this.speed);
         this.speed += this.actionSpeed;
         this.speed = this.clamp(this.speed, -1, 1);
     },
