@@ -3,7 +3,8 @@
         ["webcam", "lib/Webcam.js"]
     ],
     "atlas":[
-        ["shark", "resources/atlas/shark.png", "resources/atlas/shark.json", 1]
+        ["shark", "resources/atlas/shark.png", "resources/atlas/shark.json", 1],
+        ["surfer", "resources/atlas/surfer.png", "resources/atlas/surfer.json", 1]
     ],
 
     "audio":[
@@ -14,8 +15,7 @@
         ["bg1",   "resources/image/bg01.png"],
         ["bg2",   "resources/image/bg02.png"],
         ["bg3",   "resources/image/bg03.png"],
-        ["bg4",   "resources/image/bg04.png"],
-        ["surfer", "resources/image/surfer.png"]
+        ["bg4",   "resources/image/bg04.png"]
     ],
     "class":{
         "Background":{
@@ -42,6 +42,11 @@
         "Surfer":{
             "components":{
                 "cmp.Sprite":{"asset":"surfer"},
+                "cmp.Collision":{"check":{
+                    "shark":{
+                        "surferDied":[]
+                    }
+                }},
                 "cmp.AutoFlip":{},
                 "surf.Surfer":{}
             },
@@ -51,10 +56,16 @@
         "Shark":{
             "components":{
                 "cmp.Sprite":{"asset":"shark"},
+                "cmp.Collision":{"handle":"shark"},
                 "cmp.AutoFlip":{},
                 "cmp.Inertia":{},
                 "cmp.FlyAI":{},
-                "surf.Shark":{}
+                "surf.Shark":{},
+                "cmp.Event":{
+                    "event":{
+                        "onSurferDied":{"destroy":[]}
+                    }
+                }
             },
             "anchor.setTo":[0.5,0.5],
             "scale.setTo":[0.5,0.5]
@@ -72,7 +83,7 @@
                     }
                 }
             },
-            "wait":[{"addShark":[]}, 1000]
+            "wait":[{"addShark":[]}, 5000]
         }
     },
 

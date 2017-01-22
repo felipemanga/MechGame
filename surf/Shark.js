@@ -7,13 +7,33 @@ CLAZZ("surf.Shark",{
         this.entity.position.y = - 100;
         
         var sprite = this.entity.sprite;
-        sprite.tint = 0;
+        sprite.tint = 0x7998a3;
         var swim = Phaser.Animation.generateFrameNames('', 1, 8, '.png', 0);
+        var attack = Phaser.Animation.generateFrameNames('Shark Bite ', 1, 9, '.png', 0);
 
         sprite.animations.add('swim', swim, 7, true, false);
+        sprite.animations.add('attack', attack, 7, false, false);
         sprite.animations.play('swim');
     },
+    attacking:0,
+    attack:function(){
+        this.attacking = 60;
+        var e = this.entity;
+        e.sprite.animations.play("attack");
+        e.inertia.enabled = false;
+        e.flyAI.enabled = false;
+    },
     update:function(){
+        if(this.attacking){
+            this.attacking--;
+            if( !this.attacking ){
+                var e = this.entity;
+                e.sprite.animations.play("swim");
+                e.inertia.enabled = true;
+                e.flyAI.enabled = true;
+            }
+            return;
+        }
         var pos = this.entity.position, 
             poll = this.poll, 
             inertia = this.entity.inertia, 

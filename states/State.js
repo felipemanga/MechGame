@@ -70,10 +70,31 @@ CLAZZ("states.State", {
             gameState:this, 
             game:this.game,
             pool:this.pool,
-            call:this.pool.call.bind(this.pool),
+            call:this.__call.bind(this),
             descriptor:DOC.mergeTo({}, this.entityDefinitions[name], inject)
         }));
         return e;
+    },
+
+    __call:function(method){
+        var args = [];
+        for( var i=0; i<arguments.length; ++i )
+            args[i] = arguments[i];
+        this.pool.call.apply(this.pool, args);
+
+        args.shift();
+        for( var k in this.entities ){
+            var e = this.entities[k];
+            if( e instanceof Array ){
+                for( i=0, l=e.length; i<l; ++i ){
+                    if( typeof e[i][method] == "function" )
+                        e[i][method].apply(e[i], args);
+                }
+
+            }else if( typeof e.method == "function" ) {
+                e[method].apply(e, args);
+            }
+        }
     },
 
     isActive:function(){

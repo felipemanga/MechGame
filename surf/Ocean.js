@@ -60,7 +60,7 @@ CLAZZ("surf.Ocean",{
             points = this.points;
             for( i=0, l=diff.length; i<l; ++i ){
                 p = points[i];
-                p.e = (p.e*0.9 + (diff[i]*0.25 - (p.v*0.025)));
+                p.e = (p.e*0.9 + (diff[i]*0.5 - (p.v*0.025)));
                 if( i>0 ) p.e = p.e*0.5 + points[i-1].e*0.5;
                 p.v += p.e;
                 maxV=Math.max(maxV, p.v);

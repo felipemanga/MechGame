@@ -23,9 +23,6 @@ CLAZZ("cmp.FlyAI",{
         if( this.enabled ){
             this._timeout++;
 
-            if( self.STOP )
-                debugger;
-
             if( this._timeout >= this.timeout )
                 this.pickRandomTarget();
             
