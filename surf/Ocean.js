@@ -15,8 +15,28 @@ CLAZZ("surf.Ocean",{
         this.waterLevel *= bmd.height;
     },
 
-    getY:function(){
-
+    getY:function(x, out){
+        var points = this.points;
+        if( !points ){
+            out.y = this.waterLevel;
+            out.delta = 0;
+            return;
+        }
+        var w = (x / this.game.width) * (points.length);
+        var i = Math.floor(w);
+        if( i<0 ){
+            out.y = this.waterLevel - points[0].v;
+            out.delta = 10;
+            return;
+        }
+        if( i>=points.length-1 ){
+            out.y = this.waterLevel - points[points.length-1].v;
+            out.delta = -10;
+            return;
+        }
+        w -= i;
+        out.y = this.waterLevel - (points[i].v*(1-w) + points[i+1].v*(w));
+        out.delta = points[i].v - points[i+1].v;
     },
     
     onUpdate:function(){
@@ -38,7 +58,7 @@ CLAZZ("surf.Ocean",{
             points = this.points;
             for( i=0, l=diff.length; i<l; ++i ){
                 p = points[i];
-                p.e = (p.e*0.97 + (diff[i] * 0.01 - (p.v*0.05)));
+                p.e = (p.e*0.9 + (diff[i] * 0.0025 - (p.v*0.025)));
                 if( i>0 ) p.e = p.e*0.5 + points[i-1].e*0.5;
                 p.v += p.e;
                 maxV=Math.max(maxV, p.v);

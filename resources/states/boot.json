@@ -7,7 +7,7 @@
     ],
 
     "audio":[
-        ["bgm",  "resources/music/music.mp3"]
+        ["bgm",  ["resources/music/music.mp3"]]
     ],
 
     "image":[
@@ -41,6 +41,7 @@
         "Surfer":{
             "components":{
                 "cmp.Sprite":{"asset":"surfer"},
+                "cmp.AutoFlip":{},
                 "surf.Surfer":{}
             }
         }

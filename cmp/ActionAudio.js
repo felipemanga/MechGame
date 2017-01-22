@@ -1,6 +1,7 @@
 CLAZZ("cmp.ActionAudio", {
     INJECT:["entity", "gameState", "game", "asset"],
     EXTENDS:Phaser.Sound,
+    DYNAMIC:true,
 
     leftGain:null,
     rightGain:null,
@@ -32,6 +33,7 @@ CLAZZ("cmp.ActionAudio", {
     },
 
     create:function(){
+        console.log("playing audio");
         this.play();
     },
 
@@ -46,6 +48,8 @@ CLAZZ("cmp.ActionAudio", {
     },
 
     update:function(){
+        Phaser.Sound.prototype.update.call(this);
+
         this.speed -= this.calmSpeed;
         this.speed = this.clamp(this.speed, -1, 1);
 
@@ -59,7 +63,7 @@ CLAZZ("cmp.ActionAudio", {
         gain1 = Math.cos(actionLevel * 0.5 * Math.PI);
         gain2 = Math.cos((1.0 - actionLevel) * 0.5 * Math.PI);
     
-        this.leftGain.gain.value = gain1;
-        this.rightGain.gain.value = gain2;
+        this.rightGain.gain.value = gain1;
+        this.leftGain.gain.value = gain2;
     }
 });
